@@ -1,0 +1,46 @@
+body{
+    margin: 0;
+    padding: 0;
+    
+}
+
+h1 {
+    color: green;
+    background-color: grey;
+}
+header {
+    width: 80vw;
+    display : flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 50px;
+}
+
+#msg{
+    width: 400px;
+    border: 1px solid white;
+    background-color: white;
+}
+
+#nivel {
+    border: 1px solid red;
+    width: 70px;
+    height: 70px;
+    padding: auto;
+    align-items: center;
+    border-radius: 50%;
+    text-align: center;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: grey;
+}
+#t1{
+    position: fixed;
+    bottom: 420px;
+    right:350px;
+}
