@@ -34,11 +34,32 @@ const myGameArea = {
         
         }
 
+        //atribui imagem a torres
+        let imgTorres= [];
+        for(j=0;j<towers.length;j++){
+            if(towers[j][4]===1){
+                imgTorres[j] = new Image();
+                imgTorres[j].src = '../img/torre-medieval-64010329.jpg'
+            }else if(towers[j][4]===2){
+                imgTorres[j] = new Image();
+                imgTorres[j].src = '../img/torrenivel2.jpeg'
+            }else if(towers[j][4]===3){
+                imgTorres[j] = new Image();
+                imgTorres[j].src = '../img/torrenivel3.png'
+            }else if(towers[j][4]>3){
+                imgTorres[j] = new Image();
+                imgTorres[j].src = '../img/torrenivel3.png'
+            }
+        }
+
         //desenha torres
         for(j=0;j<towers.length;j++){
-
+            
             this.context.fillStyle = 'blue';
-            this.context.fillRect(towers[j][0], towers[j][1], towers[j][2], towers[j][3]);
+            
+            this.context.drawImage(imgTorres[j], towers[j][0], towers[j][1], towers[j][2], towers[j][3]);
+            
+            // this.context.fillRect(towers[j][0], towers[j][1], towers[j][2], towers[j][3]);
 
         }
     },
@@ -48,9 +69,11 @@ const header = document.querySelector("header");
 // console.log(header);
 // console.log(document.body.childNodes);
 
+
+
 class Component {
 
-    constructor(width, height, color, x, y) {
+    constructor(width, height, color, x, y, isMonstre) {
         this.width = width;
         this.height = height;
         this.color = color;
@@ -58,6 +81,9 @@ class Component {
         this.y = y;
         this.speedX = 0;
         this.speedY = 0;
+        this.nivel = 1;
+        this.isMonstre = isMonstre;
+        this.imgMonstros = 0;
         
     }
 
@@ -65,13 +91,40 @@ class Component {
 
         // desenha o elemento em cada posição
         const ctx = myGameArea.context;
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        
 
-        // desenha a vida atual
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.x, this.y - this.height/3, this.width*((this.vida / this.vidainicial)), 5);
+        if(this.isMonstre === true){
+            
+                if(nivelAtual===1){
+                    this.imgMonstros = new Image();
+                    this.imgMonstros.src = '..//img/monstronivel1.jpeg'
+                }else if(nivelAtual===2){
+                    this.imgMonstros = new Image();
+                    this.imgMonstros.src = '../img/torrenivel2.jpeg'
+                }else if(nivelAtual===3){
+                    this.imgMonstros = new Image();
+                    this.imgMonstros.src = '../img/torrenivel3.png'
+                }else if(nivelAtual>3){
+                    this.imgMonstros = new Image();
+                    this.imgMonstros.src = '../img/torrenivel3.png'
+                }
+                ctx.drawImage(this.imgMonstros, this.x, this.y, this.width, this.height);
+            
+                ctx.fillStyle = 'red';
+                ctx.fillRect(this.x, this.y - this.height/3, this.width*((this.vida / this.vidainicial)), 5);
 
+        }else{
+
+            
+            
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+            
+            // desenha a vida atual
+            ctx.fillStyle = 'red';
+            ctx.fillRect(this.x, this.y - this.height/3, this.width*((this.vida / this.vidainicial)), 5);
+            
+        }
     }
 }
 
@@ -79,8 +132,9 @@ class Component {
 // array de monstros
 let monstros = []
 let nivelAtual = 1;
-let terminou = true;
+let nextNivel = true;
 
+       
 
 
 
@@ -90,25 +144,42 @@ function nivel(nivel, finish){
         //construtor de wave
         //            ||
         //            \/
-        for(n=0 ; n < 11*nivel /* < -- valor a inserir */; n++){
+        for(n=0 ; n < 5 /* < -- valor a inserir */; n++){
             
             let posPrimeiroMonstro = 780;
             
-            monstros[n] = new Component(30, 30, 'yellow', posPrimeiroMonstro + 50*n, 220);
-            monstros[n].vidainicial = 100 + 100*nivel;
-            monstros[n].vida = 100 + 100*nivel;
+            monstros[n] = new Component(30, 30, 'yellow', posPrimeiroMonstro + 50*n, 220, true);
+            monstros[n].vidainicial = 50 + 100*nivel;
+            monstros[n].vida = 50 + 100*nivel;
+            monstros[n].isMonstre = true;
             
         }
         // inserir chefe da wave
         
-        const chefao = new Component(30, 30, 'orange', monstros[monstros.length-1].x+50, 220);
+        const chefao = new Component(30, 30, 'orange', monstros[monstros.length-1].x+50, 220, true);
         chefao.vida = 500*nivel;
         chefao.vidainicial = 500*nivel;
         monstros.push(chefao);
+        monstros[n].isMonstre = true;
         
-        terminou = false
+        nextNivel = false
     }
     
+    // for(j=0;j<monstros.length;j++){
+    //     if(monstros[j][4]===1){
+    //         imgMonstros[j] = new Image();
+    //         imgMonstros[j].src = '../img/monstronivel1.jpeg'
+    //     }else if(monstros[j][4]===2){
+    //         imgMonstros[j] = new Image();
+    //         imgMonstros[j].src = '../img/monstronivel1.jpeg'
+    //     }else if(monstros[j][4]===3){
+    //         imgMonstros[j] = new Image();
+    //         imgMonstros[j].src = '../img/monstronivel1.jpeg'
+    //     }else if(monstros[j][4]>3){
+    //         imgMonstros[j] = new Image();
+    //         imgMonstros[j].src = '../img/monstronivel1.jpeg'
+    //     }
+    // }
 }
 
 
@@ -116,7 +187,7 @@ function nivel(nivel, finish){
 let pontos = 10;
 
 
-const waves = [ {name: 'wave1', vida: 10, speed: -0.5 + nivelAtual/5, comp: monstros}]
+const waves = [ {name: 'wave1', vida: 10, speed: 0.4 + nivelAtual/5, comp: monstros}]
 
 function verifyWave(verify){
     return startWave(verify);
@@ -133,66 +204,54 @@ function startWave(ligado){
             // primeiro trecho reto
             if(waves[0].comp[n].x > 550){
                 waves[0].comp[n].x -= (1+1*waves[0].speed);
-                
-                // segundo trecho -- sobe  
+                                // segundo trecho -- sobe  
             }else if (waves[0].comp[n].x <= 550 && waves[0].comp[n].x >= 350 && waves[0].comp[n].y > 25){
                 waves[0].comp[n].y -=(1+1*waves[0].speed);
-                // terceiro trecho -- reto  
+                                // terceiro trecho -- reto  
             }else if (waves[0].comp[n].x <= 550 && waves[0].comp[n].x >= 350 && waves[0].comp[n].y <= 25 ){
                 waves[0].comp[n].x -=1+1*waves[0].speed;
-                // quarto trecho -- desce
+                                // quarto trecho -- desce
             }else if (waves[0].comp[n].x >= 150 && waves[0].comp[n].x < 350 && waves[0].comp[n].y <= 415){
                 waves[0].comp[n].y += 1+1*waves[0].speed;
-                // quinto trecho -- reto
+                                // quinto trecho -- reto
             }else if (waves[0].comp[n].x >= 150 && waves[0].comp[n].x < 350 && waves[0].comp[n].y >= 415  ){
                 waves[0].comp[n].x -=1+1*waves[0].speed;
-                // sexto trecho -- sobe
+                                // sexto trecho -- sobe
             }else if (waves[0].comp[n].x <= 150 && waves[0].comp[n].y > 25 ){
                 waves[0].comp[n].y -=1+1*waves[0].speed;
-                // setimo trecho -- reto
+                                // setimo trecho -- reto
             }else if (waves[0].comp[n].x > -30 && waves[0].comp[n].x < 150 && waves[0].comp[n].y <= 25 ){
                 waves[0].comp[n].x -=1+1*waves[0].speed;
-            }else {
-                if(pontos>=0){
+                            }else {
+                if(pontos>0){
                     pontos -= 1;
-                }
-                
-                
-                if(pontos < 0 & auxtermino === 0){
+                       
+                }else if(pontos <= 0 && n === (monstros.length-1)){
                     
                     document.querySelector('#start').innerHTML= `Restart`;
-                    nivelAtual=1;
-                    terminou = false;
+                    nivelAtual = 1;
+                    nextNivel = false;
+                    clickStart = false;
+                    alert(`Voce nao salvou o mundo!`);
                     
-                        alert(`Voce nao salvou o mundo!`);
-                    
-                    document.querySelector('#msg').innerHTML = `
-                    =( `;
-
-                    auxtermino =1;
+                    document.querySelector('#msg').innerHTML = `=( `;
+                       
+                    auxtermino = true;
                 }
                 
                 document.querySelector('#pontos').innerHTML = `
                 ${pontos} vidas`;
 
-
-
-                waves[0].comp[n].x = 750+(monstros.length*80);
+                waves[0].comp[n].x = (nivelAtual+1)*680;                   
                 waves[0].comp[n].y = 220;
-                
-                if(waves[0].comp[monstros.length-1].x === 750+(monstros.length*80)){
-                    clickStart = false; 
-                }
-            }
-            
+                                                   
+            }         
         }
-        
-        
-
-
     }
-
+ 
 }
+
+
 
 let clickStart = false;
 
@@ -202,27 +261,21 @@ document.querySelector('#start').addEventListener("click", ()=>{
     document.querySelector('#msg').innerHTML= `Construa torres para destruir os inimigos `;
     document.querySelector('#start').innerHTML= `Next Nivel`;
     
-    if(pontos <0){
+    if(pontos <= 0){
         pontos = 10;
         document.querySelector('#pontos').innerHTML = `
                 ${pontos} vidas`;
+        towers.splice(0);
+        score = 300;
+        areas = [ area1, area2, area3, area4,
+            area5, area6, area7, area8,
+            area9, area10, area11, area12];
     }
 } ,false );
 
 
 myGameArea.start();
 
-
-//building towers 
-// myGameArea.canvas.setAttribute("onmousedown","showCoords(event)")
-// function showCoords(evt){
-//     console.log(
-//       "clientX value: " + evt.clientX + "\n" +
-//       "clientY value: " + evt.clientY + "\n"
-//     );
-//   }
-
-//   console.log(myGameArea.canvas.offsetLeft, myGameArea.canvas.offsetBottom);
 
   // pegando a posiçao do click
 let posX = 0 ;
@@ -258,7 +311,7 @@ const area11 = [[30,90],[180,240]];
 const area12 = [[30,90],[290,350]];
 
 
-const areas = [ area1, area2, area3, area4,
+let areas = [ area1, area2, area3, area4,
                 area5, area6, area7, area8,
                 area9, area10, area11, area12];
 
@@ -402,18 +455,12 @@ function upTower(){
                     document.querySelector('#moedas').innerHTML = ` ${score} moedas`
                 }
             }else{
-                console.log(`voce esta aqui`)
+                
                 alert(`Você não tem moedas suficientes!`)
             }
-            
-            
-            
         }
     }
-
-   
 }
-
 
 
 
@@ -454,14 +501,14 @@ function receiveDamage(){
                 document.querySelector('#moedas').innerHTML=
                 `${score} moedas`;
 
-                monstros[m].width = 0;
-                monstros[m].height = 0;
+                // monstros[m].width = 0;
+                // monstros[m].height = 0;
                 monstros.splice(m,1);
 
                 // PAINEL DE MENSAGEM
-                if( monstros.length ===0){
+                if(monstros.length === 0){
                     clickStart = false;
-                    terminou = true;
+                    nextNivel = true;
                     nivelAtual += 1;
                     document.querySelector('#msg').innerHTML=
                     `Todos os monstros foram abatidos!`
@@ -470,43 +517,19 @@ function receiveDamage(){
                 }else{
                     document.querySelector('#msg').innerHTML=
                     `Restam ${monstros.length} monstro!`;
-
                 }
-                
-
-
-
-                // console.log(monstros);
-       
             }
-       
         }
 
         let MenorDistancia = Math.min.apply(Math, distancias); //metodo para pegar o menor numero em um array indeterminado de numeros;
         
-        
-
-        if(MenorDistancia < 135){
-            
+        if(MenorDistancia < 135){  
             let firstMonstroPosition = distancias.indexOf(MenorDistancia);
-            console.log(distancias.length);
-            // console.log(firstMonstroPosition);
-            // console.log('receber dado')
-
             if(myGameArea.frames%4 === 0){
-            
                 monstros[firstMonstroPosition].vida -= 1+1*towers[t][4];
-            
             }
-
         }
-            
-           
-    
-    }
-
-
-    
+    }  
 }
 
 
@@ -519,10 +542,10 @@ function updateGameArea() {
     startWave(clickStart);  
     buildTower();
     receiveDamage();
-    nivel(nivelAtual, terminou);
-    // upTower();
+    nivel(nivelAtual, nextNivel);
+
   
-    // getPosition("click")
+
 }
 
 
