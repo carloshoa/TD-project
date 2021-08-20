@@ -11,27 +11,33 @@ const myGameArea = {
     start: function () {
         this.canvas.width = 780;
         this.canvas.height = 470;
-        this.canvas.style.backgroundColor  = '#000';
-        this.canvas.style.border = '2px solid yellow';
+        let terreno = new Image();
+        terreno.src = '../img/rock.jpeg'
+        this.canvas.style.border = '2px solid gray';
         this.context = this.canvas.getContext('2d');
-        this.context.fillStyle = 'green';
-        this.context.fillRect(600, 270, 180, 200);
+        // this.context.fillStyle = 'green';
+        this.context.drawImage(terreno, 0, 0, 780, 470);
+        
+        // this.context.fillRect(600, 270, 180, 200);
+        
         document.body.insertBefore(this.canvas, document.querySelector("footer"));
         this.interval = setInterval(updateGameArea, 10);
     },
     clear: function () {
-        
+        let terreno = new Image();
+        terreno.src = '../img/wallpapers-dry-cracked-ground-texture-abstract-relief-pattern.jpg.jpg';
         //limpa tudo
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
+        this.context.drawImage(terreno, 0, 0, 780, 470);
         // let pattern = this.context.createPattern(img, 'repeat');
         this.context.fillStyle = 'green';
  
         //desenha o terreno
         for(i=0;i<terrenoElevado.length;i++){
  
-            this.context.fillRect(terrenoElevado[i][0], terrenoElevado[i][1], terrenoElevado[i][2], terrenoElevado[i][3]);
-        
+            let imgGrama = new Image();
+            imgGrama.src = '../img/45bea7a21ec3951e0d3be06c4a89e95c.jpg'
+            this.context.drawImage(imgGrama, terrenoElevado[i][0], terrenoElevado[i][1], terrenoElevado[i][2], terrenoElevado[i][3]);
         }
 
         //atribui imagem a torres
@@ -39,16 +45,19 @@ const myGameArea = {
         for(j=0;j<towers.length;j++){
             if(towers[j][4]===1){
                 imgTorres[j] = new Image();
-                imgTorres[j].src = '../img/torre-medieval-64010329.jpg'
+                imgTorres[j].src = '../img/Archer_Tower2.png';
             }else if(towers[j][4]===2){
                 imgTorres[j] = new Image();
-                imgTorres[j].src = '../img/torrenivel2.jpeg'
+                imgTorres[j].src = '../img/Archer_Tower6.png';
             }else if(towers[j][4]===3){
                 imgTorres[j] = new Image();
-                imgTorres[j].src = '../img/torrenivel3.png'
-            }else if(towers[j][4]>3){
+                imgTorres[j].src = '../img/Archer_Tower10.png';
+            }else if(towers[j][4]===4){
                 imgTorres[j] = new Image();
-                imgTorres[j].src = '../img/torrenivel3.png'
+                imgTorres[j].src = '../img/Archer_Tower12.png';
+            }else if(towers[j][4]>4){
+                imgTorres[j] = new Image();
+                imgTorres[j].src = '../img/Archer_Tower13.png';
             }
         }
 
@@ -84,6 +93,7 @@ class Component {
         this.nivel = 1;
         this.isMonstre = isMonstre;
         this.imgMonstros = 0;
+        this.onAttack = false;
         
     }
 
@@ -97,21 +107,62 @@ class Component {
             
                 if(nivelAtual===1){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '..//img/monstronivel1.jpeg'
+                    this.imgMonstros.src = '../img/Rat.gif'
                 }else if(nivelAtual===2){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/torrenivel2.jpeg'
+                    this.imgMonstros.src = '../img/Undead_Prospector.gif'
                 }else if(nivelAtual===3){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/torrenivel3.png'
-                }else if(nivelAtual>3){
+                    this.imgMonstros.src = '../img/Elder_Bonelord.gif'
+                }else if(nivelAtual===4){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/torrenivel3.png'
+                    this.imgMonstros.src = '../img/tibia-drag.gif'
+                }else if(nivelAtual===5){
+                    this.imgMonstros = new Image();
+                    this.imgMonstros.src = '../img/Dragon_Lord.gif'
+                }else if(nivelAtual===6){
+                    this.imgMonstros = new Image();
+                    this.imgMonstros.src = '../img/Behemoth.gif'
+                }else if(nivelAtual===7){
+                    this.imgMonstros = new Image();
+                    this.imgMonstros.src = '../img/Guzzlemaw.gif'
+                }else if(nivelAtual===8){
+                    this.imgMonstros = new Image();
+                    this.imgMonstros.src = '../img/Sight_of_Surrender.gif'
+                }else if(nivelAtual===9){
+                    this.imgMonstros = new Image();
+                    this.imgMonstros.src = '../img/Vexclaw.gif'
+                }else if(nivelAtual===10){
+                    this.imgMonstros = new Image();
+                    this.imgMonstros.src = '../img/Demon_1__400x400.gif'
                 }
                 ctx.drawImage(this.imgMonstros, this.x, this.y, this.width, this.height);
             
-                ctx.fillStyle = 'red';
-                ctx.fillRect(this.x, this.y - this.height/3, this.width*((this.vida / this.vidainicial)), 5);
+                
+                if((this.vida / this.vidainicial)>0.6){
+                    ctx.fillStyle = 'green';
+
+                }else if((this.vida / this.vidainicial)<0.6 &&
+                        (this.vida / this.vidainicial)>0.3){
+                    ctx.fillStyle = 'yellow';
+                }else{
+                    ctx.fillStyle = 'red';
+                }
+
+
+                ctx.fillRect(this.x, this.y - this.height/10, this.width*((this.vida / this.vidainicial)), 3);
+
+                if(this.onAttack === true){
+                    let attackImagem = new Image();
+                    attackImagem.src = '../img/26-262235_explosion-fire-clipart-pow-png.png';
+
+                    ctx.drawImage(attackImagem,this.x+25,this.y+25, 7, 7);
+                    
+                        this.onAttack = false;
+                    
+                       
+                }
+            
 
         }else{
 
@@ -122,11 +173,11 @@ class Component {
             
             // desenha a vida atual
             ctx.fillStyle = 'red';
-            ctx.fillRect(this.x, this.y - this.height/3, this.width*((this.vida / this.vidainicial)), 5);
+            ctx.fillRect(this.x, this.y - this.height/10, this.width*((this.vida / this.vidainicial)), 3);
             
         }
-    }
-}
+        
+}}
 
 
 // array de monstros
@@ -144,21 +195,21 @@ function nivel(nivel, finish){
         //construtor de wave
         //            ||
         //            \/
-        for(n=0 ; n < 5 /* < -- valor a inserir */; n++){
+        for(n=0 ; n < 5+2*nivelAtual /* < -- valor a inserir */; n++){
             
             let posPrimeiroMonstro = 780;
             
-            monstros[n] = new Component(30, 30, 'yellow', posPrimeiroMonstro + 50*n, 220, true);
-            monstros[n].vidainicial = 50 + 100*nivel;
-            monstros[n].vida = 50 + 100*nivel;
+            monstros[n] = new Component(40, 40, 'yellow', posPrimeiroMonstro + 80*n, 220, true);
+            monstros[n].vidainicial = 50 + 200*nivel;
+            monstros[n].vida = 50 + 200*nivel;
             monstros[n].isMonstre = true;
             
         }
         // inserir chefe da wave
         
-        const chefao = new Component(30, 30, 'orange', monstros[monstros.length-1].x+50, 220, true);
-        chefao.vida = 500*nivel;
-        chefao.vidainicial = 500*nivel;
+        const chefao = new Component(60, 60, 'orange', monstros[monstros.length-1].x+80, 220, true);
+        chefao.vida = 1000*nivel;
+        chefao.vidainicial = 1000*nivel;
         monstros.push(chefao);
         monstros[n].isMonstre = true;
         
@@ -187,7 +238,7 @@ function nivel(nivel, finish){
 let pontos = 10;
 
 
-const waves = [ {name: 'wave1', vida: 10, speed: 0.4 + nivelAtual/5, comp: monstros}]
+const waves = [ {name: 'wave1', vida: 10, speed: 0.8*(nivelAtual), comp: monstros}]
 
 function verifyWave(verify){
     return startWave(verify);
@@ -203,26 +254,26 @@ function startWave(ligado){
 
             // primeiro trecho reto
             if(waves[0].comp[n].x > 550){
-                waves[0].comp[n].x -= (1+1*waves[0].speed);
+                waves[0].comp[n].x -= (waves[0].speed);
                                 // segundo trecho -- sobe  
             }else if (waves[0].comp[n].x <= 550 && waves[0].comp[n].x >= 350 && waves[0].comp[n].y > 25){
-                waves[0].comp[n].y -=(1+1*waves[0].speed);
+                waves[0].comp[n].y -=(1*waves[0].speed);
                                 // terceiro trecho -- reto  
             }else if (waves[0].comp[n].x <= 550 && waves[0].comp[n].x >= 350 && waves[0].comp[n].y <= 25 ){
-                waves[0].comp[n].x -=1+1*waves[0].speed;
+                waves[0].comp[n].x -=1*waves[0].speed;
                                 // quarto trecho -- desce
             }else if (waves[0].comp[n].x >= 150 && waves[0].comp[n].x < 350 && waves[0].comp[n].y <= 415){
-                waves[0].comp[n].y += 1+1*waves[0].speed;
+                waves[0].comp[n].y += 1*waves[0].speed;
                                 // quinto trecho -- reto
             }else if (waves[0].comp[n].x >= 150 && waves[0].comp[n].x < 350 && waves[0].comp[n].y >= 415  ){
-                waves[0].comp[n].x -=1+1*waves[0].speed;
+                waves[0].comp[n].x -=1*waves[0].speed;
                                 // sexto trecho -- sobe
             }else if (waves[0].comp[n].x <= 150 && waves[0].comp[n].y > 25 ){
-                waves[0].comp[n].y -=1+1*waves[0].speed;
+                waves[0].comp[n].y -=1*waves[0].speed;
                                 // setimo trecho -- reto
             }else if (waves[0].comp[n].x > -30 && waves[0].comp[n].x < 150 && waves[0].comp[n].y <= 25 ){
-                waves[0].comp[n].x -=1+1*waves[0].speed;
-                            }else {
+                waves[0].comp[n].x -=1*waves[0].speed;
+            }else {
                 if(pontos>0){
                     pontos -= 1;
                        
@@ -242,8 +293,11 @@ function startWave(ligado){
                 document.querySelector('#pontos').innerHTML = `
                 ${pontos} vidas`;
 
-                waves[0].comp[n].x = (nivelAtual+1)*680;                   
+                waves[0].comp[n].x = 760;                   
                 waves[0].comp[n].y = 220;
+
+                console.log(waves[0].comp[n].x );
+                console.log(waves[0].comp[n].y );
                                                    
             }         
         }
@@ -266,7 +320,7 @@ document.querySelector('#start').addEventListener("click", ()=>{
         document.querySelector('#pontos').innerHTML = `
                 ${pontos} vidas`;
         towers.splice(0);
-        score = 300;
+        score = 1000;
         areas = [ area1, area2, area3, area4,
             area5, area6, area7, area8,
             area9, area10, area11, area12];
@@ -525,8 +579,11 @@ function receiveDamage(){
         
         if(MenorDistancia < 135){  
             let firstMonstroPosition = distancias.indexOf(MenorDistancia);
-            if(myGameArea.frames%4 === 0){
-                monstros[firstMonstroPosition].vida -= 1+1*towers[t][4];
+            if(myGameArea.frames%10 === 0){
+                monstros[firstMonstroPosition].vida -= (1+5*towers[t][4]);
+                monstros[firstMonstroPosition].onAttack = true;
+                
+
             }
         }
     }  
@@ -539,6 +596,7 @@ function updateGameArea() {
     for(i=0; i<monstros.length;i++){
         monstros[i].update();
     }
+    
     startWave(clickStart);  
     buildTower();
     receiveDamage();
