@@ -11,12 +11,12 @@ const myGameArea = {
     start: function () {
         this.canvas.width = 780;
         this.canvas.height = 470;
-        let terreno = new Image();
-        terreno.src = './img/chao.jpg';
+        // let terreno = new Image();
+        // terreno.src = './img/chao.jpg';
         this.canvas.style.border = '2px solid gray';
         this.context = this.canvas.getContext('2d');
         // this.context.fillStyle = 'green';
-        this.context.drawImage(terreno, 0, 0, 780, 470);
+        // this.context.drawImage(terreno, 0, 0, 780, 470);
         
         // this.context.fillRect(600, 270, 180, 200);
         
@@ -26,9 +26,9 @@ const myGameArea = {
     clear: function () {
         //limpa tudo
         let terreno = new Image();
-        terreno.src = './img/chao.jpg';
+        // terreno.src = './img/chao.jpg';
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.context.drawImage(terreno, 0, 0, 780, 470);
+        // this.context.drawImage(terreno, 0, 0, 780, 470);
         // let pattern = this.context.createPattern(img, 'repeat');
         // this.context.fillStyle = 'green';
         

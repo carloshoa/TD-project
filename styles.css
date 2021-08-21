@@ -118,3 +118,8 @@ margin-right: 20px;;
 footer{
     color: lightslategray;
 }
+
+canvas{
+    background-image: url(./img/chao-test.png);
+    background-size: contain;
+}
