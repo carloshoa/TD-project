@@ -4,10 +4,54 @@
     <meta charset="UTF-8" />
     <title>TD Project</title>
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
   <body>
       <h1>TD Project</h1>
-      <header>
+      
+      <div class="row">
+        <div class="col"> 
+          <div id="pontos" class="alert alert-secondary" >
+            <img src="./img/icons8-red-heart-48.png" alt="vidas"> 
+          10 vidas 
+          </div>
+        </div>
+        <div class="col">
+          <div id="msg" class="alert alert-secondary" role="alert">
+            <img src="/img/icons8-chat-message-50.png" alt="mensagem">
+            Aperte Start para começar a batalha!
+          </div>
+        </div>
+      </div>
+      <div class="row" id=linha-baixo>
+        <div class="col">
+          <div id = "nivel" >
+            <img src="/img/batalha.png" alt="nivel" >
+            <p>Nivel 1</p> 
+        </div>
+        </div >
+        <div class="col" id="moedas"  class="shadow p-3 mb-5 bg-white rounded">
+          <img src="/img/icons8-coin-48.png" alt="moedas">
+            300 moedas
+        </div>
+        <div class="col">
+          <div class ='comandos'>
+
+            
+            <button id="start" type="button" class="btn btn-success" >
+              <img src="./img/icons8-play-100.png" alt="play-button">
+              
+              START
+            </button>
+            
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      <!-- <header>
         <div id="pontos">
             10 vidas 
         </div>
@@ -25,9 +69,9 @@
       <div class ='comandos'>
 
         <button id="start">
-          <img src="../TD-project/img/start-button.png" alt="">
+          <img src="../TD-project/img/start-button.png" alt="start-button">
           start
-        </button>
+        </button> -->
         
         
       </div>
@@ -36,6 +80,9 @@
       <footer  >
           created by Carlos Arantes
       </footer>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="js/scrypt.js"></script>
   </body>
 </html>

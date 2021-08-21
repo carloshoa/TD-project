@@ -21,11 +21,11 @@ const myGameArea = {
         // this.context.fillRect(600, 270, 180, 200);
         
         document.body.insertBefore(this.canvas, document.querySelector("footer"));
-        this.interval = setInterval(updateGameArea, 10);
+        this.interval = setInterval(updateGameArea, 9);
     },
     clear: function () {
         let terreno = new Image();
-        terreno.src = '../img/wallpapers-dry-cracked-ground-texture-abstract-relief-pattern.jpg.jpg';
+        terreno.src = '/img/wallpapers-dry-cracked-ground-texture-abstract-relief-pattern.jpg.jpg';
         //limpa tudo
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.drawImage(terreno, 0, 0, 780, 470);
@@ -216,21 +216,6 @@ function nivel(nivel, finish){
         nextNivel = false
     }
     
-    // for(j=0;j<monstros.length;j++){
-    //     if(monstros[j][4]===1){
-    //         imgMonstros[j] = new Image();
-    //         imgMonstros[j].src = '../img/monstronivel1.jpeg'
-    //     }else if(monstros[j][4]===2){
-    //         imgMonstros[j] = new Image();
-    //         imgMonstros[j].src = '../img/monstronivel1.jpeg'
-    //     }else if(monstros[j][4]===3){
-    //         imgMonstros[j] = new Image();
-    //         imgMonstros[j].src = '../img/monstronivel1.jpeg'
-    //     }else if(monstros[j][4]>3){
-    //         imgMonstros[j] = new Image();
-    //         imgMonstros[j].src = '../img/monstronivel1.jpeg'
-    //     }
-    // }
 }
 
 
@@ -279,18 +264,24 @@ function startWave(ligado){
                        
                 }else if(pontos <= 0 && n === (monstros.length-1)){
                     
-                    document.querySelector('#start').innerHTML= `Restart`;
+                    document.querySelector('#start').innerHTML= `
+                    <img src="/img/icons8-restart-48.png" alt="restart">
+                    Restart`;
                     nivelAtual = 1;
                     nextNivel = false;
                     clickStart = false;
+                    monstros.splice(0);
                     alert(`Voce nao salvou o mundo!`);
                     
-                    document.querySelector('#msg').innerHTML = `=( `;
+                    score = 300;
+                    document.querySelector('#msg').innerHTML = `
+                       =( `;
                        
                     auxtermino = true;
                 }
                 
                 document.querySelector('#pontos').innerHTML = `
+                <img src="./img/icons8-red-heart-48.png" alt="vidas"> 
                 ${pontos} vidas`;
 
                 waves[0].comp[n].x = 760;                   
@@ -312,18 +303,30 @@ let clickStart = false;
 
 document.querySelector('#start').addEventListener("click", ()=>{ 
     clickStart = true;
-    document.querySelector('#msg').innerHTML= `Construa torres para destruir os inimigos `;
-    document.querySelector('#start').innerHTML= `Next Nivel`;
+    document.querySelector('#msg').innerHTML= `
+    <img src="/img/icons8-chat-message-50.png" alt="mensagem">
+    Construa torres para destruir os inimigos `;
+    document.querySelector('#start').innerHTML= `
+    <img src="./img/icons8-next-page-100.png" alt="next-button">
+    Next Nivel`;
     
     if(pontos <= 0){
         pontos = 10;
         document.querySelector('#pontos').innerHTML = `
+        <img src="./img/icons8-red-heart-48.png" alt="vidas"> 
                 ${pontos} vidas`;
         towers.splice(0);
-        score = 1000;
+        score = 300;
         areas = [ area1, area2, area3, area4,
             area5, area6, area7, area8,
             area9, area10, area11, area12];
+    }
+    document.querySelector('#moedas').innerHTML = ` 
+<img src="./img/icons8-coin-48.png" alt="moedas">
+${score} moedas`
+
+    if(monstros.length===0){
+        nivel(1,true);
     }
 } ,false );
 
@@ -394,7 +397,9 @@ function checkTrueTower(area, mouse){
 let score = 300; /// score inicial
 
 
-document.querySelector('#moedas').innerHTML = ` ${score} moedas`
+document.querySelector('#moedas').innerHTML = ` 
+<img src="./img/icons8-coin-48.png" alt="moedas">
+${score} moedas`
 
 
 let xTower = null;
@@ -478,10 +483,10 @@ function buyTower(){
             console.log(areas.length);
             score -= 100;
 
-            document.querySelector('#moedas').innerHTML = ` ${score} moedas`
+            document.querySelector('#moedas').innerHTML = `<img src="./img/icons8-coin-48.png" alt="moedas"> ${score} moedas`
         }
-    }else{
-        // alert(`Você não tem moedas suficientes!`)
+    }else if(score<100 && xTower){
+        alert(`Você não tem moedas suficientes!`)
     }
 }
 
@@ -506,11 +511,12 @@ function upTower(){
                     
                     score -= price;
         
-                    document.querySelector('#moedas').innerHTML = ` ${score} moedas`
+                    document.querySelector('#moedas').innerHTML = `<img src="./img/icons8-coin-48.png" alt="moedas"> ${score} moedas`
                 }
-            }else{
+            }else if(score < price && xTowerUp){
                 
                 alert(`Você não tem moedas suficientes!`)
+
             }
         }
     }
@@ -550,10 +556,12 @@ function receiveDamage(){
 
                 if(score === 0){
                     document.querySelector('#moedas').innerHTML=
-                    `${score} moeda`;  
+                    `<img src="./img/icons8-coin-48.png" alt="moedas">
+                    ${score} moeda`;  
                 }
                 document.querySelector('#moedas').innerHTML=
-                `${score} moedas`;
+                `<img src="./img/icons8-coin-48.png" alt="moedas">
+                ${score} moedas`;
 
                 // monstros[m].width = 0;
                 // monstros[m].height = 0;
@@ -565,12 +573,22 @@ function receiveDamage(){
                     nextNivel = true;
                     nivelAtual += 1;
                     document.querySelector('#msg').innerHTML=
-                    `Todos os monstros foram abatidos!`
-                    document.querySelector('#nivel').innerHTML=`<br>
-                    Nivel: ${nivelAtual}`
+                    `<img src="/img/icons8-chat-message-50.png" alt="mensagem">
+                    Todos os monstros foram abatidos!`
+                    document.querySelector('#nivel').innerHTML=`
+                    <img src="./img/batalha.png" alt="nivel">
+                    <p>Nivel ${nivelAtual}</p>`
                 }else{
-                    document.querySelector('#msg').innerHTML=
-                    `Restam ${monstros.length} monstro!`;
+                    if(monstros.length>1){
+                        document.querySelector('#msg').innerHTML=
+                        `<img src="/img/icons8-chat-message-50.png" alt="mensagem">
+                        Restam ${monstros.length} monstro!`;
+                    }else{
+                        document.querySelector('#msg').innerHTML=
+                        `<img src="/img/icons8-chat-message-50.png" alt="mensagem">
+                        Resta apenas ${monstros.length} monstro! Não desista`;
+
+                    }
                 }
             }
         }
@@ -590,13 +608,32 @@ function receiveDamage(){
 }
 
 
+function checkWin(){
+
+    if (nivelAtual===11){
+        alert(`Parabens! Você salvou o mundo`);
+        document.querySelector('#msg').innerHTML=
+        `<img src="/img/icons8-chat-message-50.png" alt="mensagem">
+        =]`;
+        nivelAtual = 1;
+        nextNivel = false;
+        clickStart = false;
+        monstros.splice(0);
+        score =300;
+        towers.splice(0);
+        areas = [ area1, area2, area3, area4,
+            area5, area6, area7, area8,
+            area9, area10, area11, area12];
+    }
+}
+
 
 function updateGameArea() {
     myGameArea.clear();
     for(i=0; i<monstros.length;i++){
         monstros[i].update();
     }
-    
+    checkWin();
     startWave(clickStart);  
     buildTower();
     receiveDamage();

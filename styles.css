@@ -1,12 +1,13 @@
-body{
+*{
     margin: 0;
     padding: 0;
+    
     
 }
 
 h1 {
     color: green;
-    background-color: grey;
+   
 }
 header {
     width: 80vw;
@@ -18,26 +19,42 @@ header {
 }
 
 #msg{
-    width: 400px;
+    width: 500px;
     border: 1px solid white;
     background-color: white;
 }
 
+#msg img{
+    margin-right: 10px;
+    height: 30px;
+}
+
 #nivel {
-    border: 1px solid red;
+    border: 1px solid #28a745;
     width: 70px;
     height: 70px;
     padding: auto;
     align-items: center;
     border-radius: 50%;
     text-align: center;
+    background-color:  #28a745;
+    margin-bottom: 10px;
+    color: white;
+}
+
+#nivel img{
+    padding-top: 10px;
+    height: 30px;
+    color: white;
 }
 
 body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(48, 48, 48);
+    background-image: url(./img/61205b6727095.jpg);
+    background-image: no-repeat;
+
    
     
 }
@@ -45,31 +62,56 @@ body{
 #moedas{
     background-color: white;
     display: flex;
-    width: 300px;
+    width: 400px;
     height: 50px;
     align-content: center;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-    font-weight: 500;
+
 }
 
+#moedas img{
+    height: 30px;
+    padding-right: 20px;
+}
 
 #start{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 10px;
+    margin-left: 30px;
+   
 }
 
+#start img{
+    width: 30px;
+}
 
 
 #pontos {
 display: flex;
-background-color: white;
-height: 80px;
+background-color: #28a745;
+border: #28a745;
+color: white;
+height: 50px;
 width: 120px;
 position: relative;
 margin: auto;
 text-align: center;
 justify-content: center;
 align-items: center;
+margin-bottom: 20px;
+}
+
+#pontos img{
+    margin-right: 10px;;
+}
+
+#linha-baixo{
+    /* display: flex; */
+    align-items: center;
+    /* justify-content: center; */
+}
+
+footer{
+    color: lightslategray;
 }
