@@ -2,7 +2,7 @@ let terrenoElevado = [[600,270,180,200],[600, 0, 180, 200],[400,70, 130, 400],[2
 let towers = [];
 
 // let img = new Image();
-// img.src = '../img/grama1.png'
+// img.src = '/img/grama1.png'
 
 
 const myGameArea = {
@@ -12,7 +12,7 @@ const myGameArea = {
         this.canvas.width = 780;
         this.canvas.height = 470;
         let terreno = new Image();
-        terreno.src = '../img/rock.jpeg'
+        terreno.src = '/img/rock.jpeg'
         this.canvas.style.border = '2px solid gray';
         this.context = this.canvas.getContext('2d');
         // this.context.fillStyle = 'green';
@@ -36,7 +36,7 @@ const myGameArea = {
         for(i=0;i<terrenoElevado.length;i++){
  
             let imgGrama = new Image();
-            imgGrama.src = '../img/45bea7a21ec3951e0d3be06c4a89e95c.jpg'
+            imgGrama.src = '/img/45bea7a21ec3951e0d3be06c4a89e95c.jpg'
             this.context.drawImage(imgGrama, terrenoElevado[i][0], terrenoElevado[i][1], terrenoElevado[i][2], terrenoElevado[i][3]);
         }
 
@@ -45,19 +45,19 @@ const myGameArea = {
         for(j=0;j<towers.length;j++){
             if(towers[j][4]===1){
                 imgTorres[j] = new Image();
-                imgTorres[j].src = '../img/Archer_Tower2.png';
+                imgTorres[j].src = '/img/Archer_Tower2.png';
             }else if(towers[j][4]===2){
                 imgTorres[j] = new Image();
-                imgTorres[j].src = '../img/Archer_Tower6.png';
+                imgTorres[j].src = '/img/Archer_Tower6.png';
             }else if(towers[j][4]===3){
                 imgTorres[j] = new Image();
-                imgTorres[j].src = '../img/Archer_Tower10.png';
+                imgTorres[j].src = '/img/Archer_Tower10.png';
             }else if(towers[j][4]===4){
                 imgTorres[j] = new Image();
-                imgTorres[j].src = '../img/Archer_Tower12.png';
+                imgTorres[j].src = '/img/Archer_Tower12.png';
             }else if(towers[j][4]>4){
                 imgTorres[j] = new Image();
-                imgTorres[j].src = '../img/Archer_Tower13.png';
+                imgTorres[j].src = '/img/Archer_Tower13.png';
             }
         }
 
@@ -107,34 +107,34 @@ class Component {
             
                 if(nivelAtual===1){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/Rat.gif'
+                    this.imgMonstros.src = '/img/Rat.gif'
                 }else if(nivelAtual===2){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/Undead_Prospector.gif'
+                    this.imgMonstros.src = '/img/Undead_Prospector.gif'
                 }else if(nivelAtual===3){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/Elder_Bonelord.gif'
+                    this.imgMonstros.src = '/img/Elder_Bonelord.gif'
                 }else if(nivelAtual===4){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/tibia-drag.gif'
+                    this.imgMonstros.src = '/img/tibia-drag.gif'
                 }else if(nivelAtual===5){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/Dragon_Lord.gif'
+                    this.imgMonstros.src = '/img/Dragon_Lord.gif'
                 }else if(nivelAtual===6){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/Behemoth.gif'
+                    this.imgMonstros.src = '/img/Behemoth.gif'
                 }else if(nivelAtual===7){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/Guzzlemaw.gif'
+                    this.imgMonstros.src = '/img/Guzzlemaw.gif'
                 }else if(nivelAtual===8){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/Sight_of_Surrender.gif'
+                    this.imgMonstros.src = '/img/Sight_of_Surrender.gif'
                 }else if(nivelAtual===9){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/Vexclaw.gif'
+                    this.imgMonstros.src = '/img/Vexclaw.gif'
                 }else if(nivelAtual===10){
                     this.imgMonstros = new Image();
-                    this.imgMonstros.src = '../img/Demon_1__400x400.gif'
+                    this.imgMonstros.src = '/img/Demon_1__400x400.gif'
                 }
                 ctx.drawImage(this.imgMonstros, this.x, this.y, this.width, this.height);
             
@@ -154,7 +154,7 @@ class Component {
 
                 if(this.onAttack === true){
                     let attackImagem = new Image();
-                    attackImagem.src = '../img/26-262235_explosion-fire-clipart-pow-png.png';
+                    attackImagem.src = '/img/26-262235_explosion-fire-clipart-pow-png.png';
 
                     ctx.drawImage(attackImagem,this.x+25,this.y+25, 7, 7);
                     
