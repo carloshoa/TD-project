@@ -12,7 +12,7 @@ const myGameArea = {
         this.canvas.width = 780;
         this.canvas.height = 470;
         let terreno = new Image();
-        terreno.src = './img/rock.jpeg'
+        terreno.src = './img/chao.jpg';
         this.canvas.style.border = '2px solid gray';
         this.context = this.canvas.getContext('2d');
         // this.context.fillStyle = 'green';
@@ -24,14 +24,14 @@ const myGameArea = {
         this.interval = setInterval(updateGameArea, 9);
     },
     clear: function () {
-        let terreno = new Image();
-        terreno.src = './img/wallpapers-dry-cracked-ground-texture-abstract-relief-pattern.jpg.jpg';
         //limpa tudo
+        let terreno = new Image();
+        terreno.src = './img/chao.jpg';
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.drawImage(terreno, 0, 0, 780, 470);
         // let pattern = this.context.createPattern(img, 'repeat');
-        this.context.fillStyle = 'green';
- 
+        // this.context.fillStyle = 'green';
+        
         //desenha o terreno
         for(i=0;i<terrenoElevado.length;i++){
  
@@ -204,6 +204,7 @@ function nivel(nivel, finish){
             monstros[n].vidainicial = 50 + 200*nivel;
             monstros[n].vida = 50 + 200*nivel;
             monstros[n].isMonstre = true;
+          
             
         }
         // inserir chefe da wave
@@ -272,8 +273,12 @@ function startWave(ligado){
                     nextNivel = false;
                     clickStart = false;
                     monstros.splice(0);
-                    alert(`Voce nao salvou o mundo!`);
-                    
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Você não salvou o mundo!',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                      })
                     score = 300;
                     document.querySelector('#msg').innerHTML = `
                        =( `;
@@ -350,7 +355,8 @@ function getPosition(event){
 
 function getPosition2(event){
     posXUp = event.clientX - myGameArea.canvas.offsetLeft;
-    posYUp = event.clientY - myGameArea.canvas.offsetTop;           
+    posYUp = event.clientY - myGameArea.canvas.offsetTop;
+            
 }
 
 
@@ -473,21 +479,56 @@ function buildTower(){
 function buyTower(){
 
     if(score >= 100 && xTower){
-        
-        if(confirm(`deseja compra uma torre por: 100 gold?`)){
-                        
-            towers.push([xTower, yTower, 60, 60,1]);
-            upgradeArea.push(areas[indexTower]);
-            areas.splice(indexTower,1);
             
-            console.log(upgradeArea)
-            console.log(areas.length);
-            score -= 100;
+        
+            swal.fire({
+            title: 'Deseja construir uma torre?',
+            text: "A torre nível 1 custa 100 moedas!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim!',
+            cancelButtonText: 'Ainda não'
+            }).then((result) => {
+              if (result.value) {
+                towers.push([xTower, yTower, 60, 60,1]);
+                upgradeArea.push(areas[indexTower]);
+                areas.splice(indexTower,1);
+                
+                score -= 100;
+    
+                document.querySelector('#moedas').innerHTML = `<img src="./img/icons8-coin-48.png" alt="moedas"> ${score} moedas`
+                swal.fire(
+                  'Parabéns!',
+                  'Sua torre esta pronta!',
+                  'success'
+                )
+              }
+            })
+          
 
-            document.querySelector('#moedas').innerHTML = `<img src="./img/icons8-coin-48.png" alt="moedas"> ${score} moedas`
-        }
+
+
+        // if(confirm(`deseja compra uma torre por: 100 gold?`)){
+                        
+        //     towers.push([xTower, yTower, 60, 60,1]);
+        //     upgradeArea.push(areas[indexTower]);
+        //     areas.splice(indexTower,1);
+            
+        //     console.log(upgradeArea)
+        //     console.log(areas.length);
+        //     score -= 100;
+
+        //     document.querySelector('#moedas').innerHTML = `<img src="./img/icons8-coin-48.png" alt="moedas"> ${score} moedas`
+        // }
     }else if(score<100 && xTower){
-        alert(`Você não tem moedas suficientes!`)
+        Swal.fire({
+            title: 'Error!',
+            text: 'Você não tem grana para isso!',
+            icon: 'error',
+            confirmButtonText: 'Ok! :('
+          })
     }
 }
 
@@ -501,22 +542,55 @@ function upTower(){
         if(towers[t][0] === xTowerUp && towers[t][1] === yTowerUp){
             
             let price = 100 + towers[t][4]*100;
-            
+            console.log(t)
             if(score >= price && xTowerUp){
-                                   
-                if(confirm(`deseja melhorar sua torre : ${price} gold?`)){
+                 
+                
+                function testbug(t){
+                    swal.fire({
+                    title: `Deseja melhorar sua torre nivel ${towers[t][4]}?`,
+                    text: `A torre nível ${towers[t][4] + 1} custa ${price} moedas!`,
                     
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sim!',
+                    cancelButtonText: 'Ainda não'
+                    }).then((result1) => {
+                      if (result1.value) {
+
+                          towers[t][4] += 1;
+                          console.log(t)
+                          score -= price;
+              
+                        
+                          swal.fire(
+                              'Parabéns!',
+                              'Sua torre esta pronta!',
+                              'success'
+                              )
+                            }
+                            document.querySelector('#moedas').innerHTML = `<img src="./img/icons8-coin-48.png" alt="moedas"> ${score} moedas`;
+                            
+                        })};
+                        
+                      testbug(t);  
+                // if(confirm(`deseja melhorar sua torre : ${price} gold?`)){
+                    
+                //     towers[t][4] += 1;
+                
+                //     score -= price;
         
-                    towers[t][4] += 1;
-                    
-                    
-                    score -= price;
-        
-                    document.querySelector('#moedas').innerHTML = `<img src="./img/icons8-coin-48.png" alt="moedas"> ${score} moedas`
-                }
+                //     document.querySelector('#moedas').innerHTML = `<img src="./img/icons8-coin-48.png" alt="moedas"> ${score} moedas`
+                // }
             }else if(score < price && xTowerUp){
                 
-                alert(`Você não tem moedas suficientes!`)
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Você não tem grana para isso!',
+                    icon: 'error',
+                    confirmButtonText: 'Ok! :('
+                  })
 
             }
         }
@@ -616,7 +690,13 @@ function checkWin(){
         document.querySelector('#msg').innerHTML=
         `<img src="./img/icons8-chat-message-50.png" alt="mensagem">
         =]`;
+        document.querySelector('#start').innerHTML= `
+                    <img src="./img/icons8-restart-48.png" alt="restart">
+                    Restart`;
         nivelAtual = 1;
+        document.querySelector('#nivel').innerHTML=`
+                    <img src="./img/batalha.png" alt="nivel">
+                    <p>Nivel ${nivelAtual}</p>`
         nextNivel = false;
         clickStart = false;
         monstros.splice(0);
