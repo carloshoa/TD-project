@@ -1,5 +1,5 @@
 # IRONHACK-PROJECTS
-## Project01 - IronSnooker 
+## Project01 - Iron-TD
 
 ### DESCRIPTION
 This is a game made with canvas that simulate tower defense!
